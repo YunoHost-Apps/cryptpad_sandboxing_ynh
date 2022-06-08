@@ -1,0 +1,46 @@
+{
+    "name": "CryptPad SandBoxing",
+    "id": "sanboxing",
+    "packaging_format": 1,
+    "description": {
+        "en": "CryptPad SandBoxing domain",
+        "fr": "Domaine de sandboxing pour CryptPad"
+    },
+    "version": "1.0~ynh1",
+    "url": "https://cryptpad.fr/",
+    "upstream": {
+        "license": "AGPL-3.0-only",
+        "website": "https://cryptpad.fr/",
+        "demo": "https://cryptpad.fr/",
+        "admindoc": "https://docs.cryptpad.fr/en/",
+        "code": "https://github.com/xwiki-labs/cryptpad"
+    },
+    "license": "AGPL-3.0-only",
+    "maintainer": {
+        "name": "",
+        "email": ""
+    },
+    "requirements": {
+        "yunohost": ">= 4.3.0"
+    },
+    "multi_instance": false,
+    "services": [
+        "nginx"
+    ],
+    "arguments": {
+        "install": [
+            {
+                "name": "domain",
+                "type": "domain"
+            },
+            {
+                "name": "porti",
+                "type": "string"
+            },
+            {
+                "name": "cryptpad_domain",
+                "type": "string"
+            }
+        ]
+    }
+}

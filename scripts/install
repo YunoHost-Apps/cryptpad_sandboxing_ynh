@@ -1,0 +1,57 @@
+#!/bin/bash
+
+#=================================================
+# GENERIC START
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+#=================================================
+# MANAGE SCRIPT FAILURE
+#=================================================
+
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
+
+#=================================================
+# RETRIEVE ARGUMENTS FROM THE MANIFEST
+#=================================================
+
+domain=$YNH_APP_ARG_DOMAIN
+cryptpad_domain=$YNH_APP_ARG_CRYPTPAD_DOMAIN
+path_url="/"
+porti=$YNH_APP_ARG_PORTI
+app=$YNH_APP_INSTANCE_NAME
+
+#=================================================
+# CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
+#=================================================
+
+# Register (book) web path
+ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
+
+#=================================================
+# STANDARD MODIFICATIONS
+#=================================================
+# FIND AND OPEN A PORT
+#=================================================
+
+# Find an available port
+porti=$(ynh_find_port --port=$porti)
+ynh_app_setting_set --app=$app --key=porti --value=$porti
+
+#=================================================
+# NGINX CONFIGURATION
+#=================================================
+
+# Create a dedicated NGINX config
+ynh_add_nginx_config
+
+#=================================================
+# RELOAD NGINX
+#=================================================
+
+ynh_systemd_action --service_name=nginx --action=reload
